@@ -1,20 +1,18 @@
 ---
-dist: focal
-language: python
-python:
-  - "3.9"
+sudo: required
+dist: trusty
 
 matrix:
-  include:
-    - env: ANSIBLE_VERSION=2.10.7
-    - env: ANSIBLE_VERSION=3.4.0
-    - env: ANSIBLE_VERSION=4.10.0
-    - env: ANSIBLE_VERSION=5.10.0
-    - env: ANSIBLE_VERSION=6.0.0    
+  import_tasks:
+    - env: ANSIBLE_VERSION=2.4.6
+    - env: ANSIBLE_VERSION=2.5.10
+    - env: ANSIBLE_VERSION=2.6.6
+    - env: ANSIBLE_VERSION=2.7.1
 
 before_install:
  - sudo apt-get -y install software-properties-common
- - sudo -H pip install --no-cache-dir ansible==$ANSIBLE_VERSION
+ - sudo apt-get -y install python-pip
+ - sudo pip install ansible==$ANSIBLE_VERSION
  - ansible --version
  # We download the latest deploy stable tag
  - sudo ansible-galaxy install -c ansistrano.deploy
